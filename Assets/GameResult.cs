@@ -34,9 +34,11 @@ public class GameResult : MonoBehaviour
         }
     }
 
-    public void setScore()
+    public void setScore(int scoreSended)
     {
-        score++;
+        score+=scoreSended;;
+
+        if(score<=0){score=0;}
         Debug.Log("Total score: " + score);
     }
 

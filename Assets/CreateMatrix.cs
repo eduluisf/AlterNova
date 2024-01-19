@@ -122,12 +122,36 @@ private void CompareValues()
         secondClickedButton.interactable = false;
       
         gameResult.setPairs();
+          gameResult.setScore(20);
     }
     else
     {
-        Debug.Log("¡Valores diferentes!");
+          TextMeshProUGUI buttonText = firstClickedButton.GetComponentInChildren<TextMeshProUGUI>();
+           
+         TextMeshProUGUI buttonTextTwo = secondClickedButton.GetComponentInChildren<TextMeshProUGUI>();
+      
+        StartCoroutine(waiterTime(0.5f, buttonText, buttonTextTwo));
+        gameResult.setScore(-5);
+
+         
     }
 }
 
+
+
+private IEnumerator waiterTime(float time,TextMeshProUGUI buttonText,TextMeshProUGUI buttonTextTwo){
+
+       yield return new WaitForSeconds(time);
+      
+        buttonText.gameObject.SetActive(false);
+
+
+    
+        buttonTextTwo.gameObject.SetActive(false);
+        Debug.Log("¡Valores diferentes!");
+
+
+
+}
 
 }

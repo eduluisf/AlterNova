@@ -14,53 +14,69 @@ public class JsonReader : MonoBehaviour
         public int maxR=0;
         public int maxC=0;
         public  int maxNumber=0;
+
+        public int minR=0;
+        public int minC=0;
+        public  int minNumber=0;
         
-    private int[,] matrix; // La matriz que almacenará los datos
+    private int[,] matrix;
+ private  bool  isPair;
+
+
     private void Start()
     {
         string jsonData = ReadJsonFile(filePath);
 
         
-        var blocksList = JsonUtility.FromJson<BlocksData>(jsonData).blocks;
+        List<Block>  blocksList = JsonUtility.FromJson<BlocksData>(jsonData).blocks;
 
-        if (blocksList != null && blocksList.Any())
+        if (blocksList != null)
         {
             
           maxR = blocksList.Max(block => block.R);
           maxC = blocksList.Max(block => block.C);
           maxNumber = blocksList.Max(block => block.number);
+             minR = blocksList.Min(block => block.R);
+          minC = blocksList.Min(block => block.C);
+          minNumber = blocksList.Min(block => block.number);
 
-            Debug.Log($"El valor máximo de R es: {maxR}");
-            Debug.Log($"El valor máximo de C es: {maxC}");
-            Debug.Log($"El valor máximo de C es: {maxNumber}");
-         CreateMatrix(blocksList);
+            Debug.Log("El valor máximo de R es:"+ maxR);
+            Debug.Log("El valor máximo de C es:"+maxC);
+            Debug.Log("El valor máximo de Number es:"+maxNumber);
+            Debug.Log("El valor Min de R es:"+ minR);
+            Debug.Log("El valor Min de C es:"+minC);
+            Debug.Log("El valor Min de Number es:"+minNumber);
+
+
+         bool containsBlockWith2 = blocksList.Any(block => block.R == 2 && block.C == 2);
+         int mult = maxR*maxC;
+            if(mult%2==0){
+
+                isPair = true;
+            }
+
+
+        if (maxNumber <= 9 && minNumber >= 0 && maxC <= 8 && maxR <= 8 && containsBlockWith2 && isPair==true)
+        {
+            CreateMatrix(blocksList);
+        }else{
+
+            Debug.LogError("Cant create matrix");
+        }
+      
+
+           
     
 
-        // Llenar la matriz con los datos del JSON
+    
     
         }
         else
         {
-            Debug.LogError("La lista de bloques está vacía o no se pudo deserializar correctamente.");
+            Debug.LogError("List is"+blocksList);
         }
     }
 
-    public int GetMaxR()
-    {
-        return maxR;
-    }
-
-    // Método para obtener el valor máximo de C
-    public int GetMaxC()
-    {   
-        Debug.Log($"El valor máximo de C"+maxC);
-        return maxC;
-    }
-
-    public int[,] GetMatrix()
-    {
-        return matrix;
-    }
     void CreateMatrix(List<Block> blocks)
     {
         // Inicializar la matriz con ceros
@@ -99,6 +115,25 @@ public class JsonReader : MonoBehaviour
         return jsonData;
     }
         
+    // Getters R,C,Matrix called from CreateMatrix.cs
+    public int GetMaxR()
+    {
+        return maxR;
+    }
+
+
+    public int GetMaxC()
+    {   
+        Debug.Log($"El valor máximo de C"+maxC);
+        return maxC;
+    }
+
+    public int[,] GetMatrix()
+    {
+        return matrix;
+    }
+
+
     // Clase para deserializar el JSON
     [System.Serializable]
     private class BlocksData
