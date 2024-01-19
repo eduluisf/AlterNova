@@ -55,7 +55,7 @@ public class JsonReader : MonoBehaviour
             }
         if (maxNumber <= 9 && minNumber >= 0 && maxC <= 8 && maxR <= 8 && containsBlockWith2 && isPair==true)
         {
-            //IF we are available we create the matrix, this matrix it'll be readed in Creatematrix.cs
+            //IF we are available we create the matrix, this matrix it'll be read in Creatematrix.cs
             CreateMatrix(blocksList);
         }else{
 

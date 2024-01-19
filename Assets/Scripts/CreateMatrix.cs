@@ -134,6 +134,8 @@ private void CompareValues()
         firstClickedButton.interactable = false;
         secondClickedButton.interactable = false;
       
+
+      //We send the values to GameResult
         gameResult.setPairs();
         gameResult.setScore(20);
         audioSource.PlayOneShot(audioClip[1]);

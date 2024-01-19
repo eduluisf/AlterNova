@@ -5,6 +5,8 @@ using System;
 
 public class GameTimer : MonoBehaviour
 {
+
+    
     private float gameTime = 0f;
     [SerializeField]
     private GameResult gameResult;
@@ -14,18 +16,17 @@ public class GameTimer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI buttonText;
 
-    private bool isTimeRunning = true; // Nuevo: Controla si el tiempo está corriendo o no
-
+    private bool isTimeRunning = true; //Boolean for controlling the time
     private void Update()
     {
         if (isTimeRunning)
         {
-            // Incrementa el tiempo del juego en segundos
+            // Increment the game time in seconds
             gameTime += Time.deltaTime;
             int timeint = (int)Math.Round(gameTime);
             buttonText.text = timeint.ToString();
 
-            // Verifica si han pasado 5 segundos desde la última vez que se restó el puntaje
+           // if   the time in  lastScoreDecreaseTime  have  passed  we subtract ponts
             if (gameTime - lastScoreDecreaseTime >= scoreDecreaseInterval)
             {
                 DecreaseScore();
@@ -34,19 +35,19 @@ public class GameTimer : MonoBehaviour
         }
     }
 
-    // Método que retorna el tiempo de juego actual en segundos
+    // Getter for the time in seconds
     public float GetGameTime()
     {
         return gameTime;
     }
 
-    // Método para restar -10 al puntaje
+    // Substract points
     private void DecreaseScore()
     {
         gameResult.setScore(-5);
     }
 
-    // Nuevo: Método para detener el tiempo desde otro script
+    // StopTime 
     public void StopTime()
     {
         isTimeRunning = false;
